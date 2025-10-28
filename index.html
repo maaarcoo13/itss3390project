@@ -131,13 +131,67 @@
   }
 
   /* Right section: 25% */
-  #rightContent {
-    float: left;
-    width: 25%;
-    padding: 10px;
-    background-color: black;
-    color: white;
-  }
+ /* --- Standings Container --- */
+#rightContent {
+  float: left;
+  width: 25%;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  height: 600px; /* altura fija */
+  overflow-y: auto; /* scroll vertical si el contenido excede */
+}
+
+#rightContent h2 {
+  text-align: center;
+  color: #2A63E8;
+  margin-bottom: 10px;
+  font-weight: bold;
+
+}
+
+/* --- Each Conference Section --- */
+.standings-section {
+  margin-bottom: 25px;
+}
+
+.standings-section h3 {
+  text-align: center;
+  color: white;
+  background-color: #2A63E8;
+  margin: 0;
+  padding: 8px 0;
+  border-radius: 5px 5px 0 0;
+}
+
+/* --- Table Formatting --- */
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+}
+
+.standings-table th {
+  background-color: #1A1A1A;
+  color: #2A63E8;
+  padding: 6px;
+  border-bottom: 1px solid #333;
+}
+
+.standings-table td {
+  padding: 6px;
+  border-bottom: 1px solid #333;
+}
+
+.team-logo {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
 
   /* Hamburger slide menu */
   .Ham-Menu {
@@ -340,16 +394,91 @@
       <!-- Dentro de tu main content -->
        <img src="https://spain.id.nba.com/storage/images/photos/1590403706.jpeg" width="100%" alt="NBA Spain Image">
        <h2 style="color: black; font-weight: bold;">
-        <a href="news-gasolbrothers.html" target="_blank" style="color:black; text-decoration:none;">
-    Pau and Marc Gasol became the first brothers to get their jerseys retired
-        </a>
+       <a href="news-gasolbrothers.html" target="_blank" style="color:black; text-decoration:none;">Pau and Marc Gasol became the first brothers to get their jerseys retired
+      </a>
       </h2>
 
     </div>
-    <div id="rightContent" style="height: 527px;">
-      <h2>About</h2>
-      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Per risus ridiculus; ultrices condimentum conubia molestie purus nibh...</p>
+    <div id="rightContent">
+  <h2>NBA Standings</h2>
+  <div id="standings-wrapper">
+    
+    <!-- Eastern Conference -->
+    <div class="standings-section">
+      <h3>Eastern Conference</h3>
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>W</th>
+            <th>L</th>
+            <th>Win%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/8/8f/Boston_Celtics.svg" class="team-logo"> BOS</td>
+            <td>58</td><td>24</td><td>.707</td>
+          </tr>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/4/4a/Milwaukee_Bucks_logo.svg" class="team-logo"> MIL</td>
+            <td>53</td><td>29</td><td>.646</td>
+          </tr>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/2/25/New_York_Knicks_logo.svg" class="team-logo"> NYK</td>
+            <td>50</td><td>32</td><td>.610</td>
+          </tr>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/1/1b/Cleveland_Cavaliers_logo.svg" class="team-logo"> CLE</td>
+            <td>48</td><td>34</td><td>.585</td>
+          </tr>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/c/c7/Miami_Heat_logo.svg" class="team-logo"> MIA</td>
+            <td>45</td><td>37</td><td>.549</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
+    <!-- Western Conference -->
+    <div class="standings-section">
+      <h3>Western Conference</h3>
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>W</th>
+            <th>L</th>
+            <th>Win%</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> DAL</td>
+            <td>57</td><td>25</td><td>.695</td>
+          </tr>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> DEN</td>
+            <td>54</td><td>28</td><td>.659</td>
+          </tr>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> MIN</td>
+            <td>51</td><td>31</td><td>.622</td>
+          </tr>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/2/28/Houston_Rockets.svg" class="team-logo"> HOU</td>
+            <td>48</td><td>34</td><td>.585</td>
+          </tr>
+          <tr>
+            <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> PHO</td>
+            <td>46</td><td>36</td><td>.561</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
   </div>
 
   <!-- Yellow block -->
@@ -358,9 +487,9 @@
   <div class="news-card">
     <img src="https://e01-xlk-ue-marca.uecdn.es/uploads/2025/09/29/68dafb4968e8d.jpeg" alt="Noticia 1">
     <h3 style="color: black; font-weight: bold;">
-      <a href="news-hugogonzalez.html" target="_blank" style="color:black; text-decoration:none;">Hugo Gonzalez's first Media Day
+    <a href="news-hugogonzalez.html" target="_blank" style="color:black; text-decoration:none;">Hugo Gonzalez's first Media Day
 
-      </a>
+    </a>
     </h3>
     <p>Former Real Madrid player had his first Media Day on the NBA...</p>
   </div>
