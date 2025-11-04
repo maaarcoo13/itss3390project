@@ -216,7 +216,6 @@
 
   .Ham-Menu a:hover { background-color: #1A45B8; }
 
-  /* Yellow block */
   .yellow-block {
     background-color: yellow;
     color: black;
@@ -224,16 +223,16 @@
     margin-top: 7px;
   }
   
-  /* Noticias tipo tarjetas (3 columnas) */
+ 
 .news-section {
   display: flex;
-  gap: 10px;            /* espacio entre columnas */
-  margin-top: 7px;      /* separación con contenido anterior */
+  gap: 10px;            
+  margin-top: 7px;      
   padding: 10px;
 }
 
 .news-card {
-  flex: 1;                      /* cada tarjeta ocupa 1/3 del ancho */
+  flex: 1;                      
   background-color: #f2f2f2;
   padding: 10px;
   border-radius: 5px;
@@ -256,6 +255,47 @@
   font-size: 14px;
   color: #333;
 }
+
+  /* Responsive Columns */
+  [class*="col-"] { width: 100%; }
+
+  /* Tablets */
+  @media only screen and (min-width: 600px) {
+    #contentWrapper {
+      flex-direction: row;
+    }
+    #mainContent {
+      flex: 70%;
+    }
+    #rightContent {
+      flex: 30%;
+    }
+
+    .news-section {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .news-card {
+      flex: 1 1 calc(50% - 10px);
+    }
+  }
+
+  /* Desktop */
+  @media only screen and (min-width: 768px) {
+    #contentWrapper {
+      flex-direction: row;
+    }
+    #mainContent {
+      flex: 75%;
+    }
+    #rightContent {
+      flex: 25%;
+    }
+
+    .news-card {
+      flex: 1 1 calc(33.33% - 10px);
+    }
+  }
 
 </style>
 </head>
