@@ -1,1 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: Verdana;
+    color: #aaaaaa;
+    background-color: black;
+    margin: 0;
+  }
+
+  /* Top Navigation */
+  .topnav {
+    overflow: hidden;
+    background-color: black;
+  }
+
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .topnav a:hover { background-color: #ddd; color: black; }
+
+  .topnav a.active { background-color: white; color: white; }
+
+  /* Page title */
+  .page-title {
+    background-color:#2A63E8;
+    padding:15px 0;
+    text-align:center;
+    color:white;
+  }
+
+  .page-title h1 {
+    color: white; 
+    margin: 10px 0;    
+  }
+
+  /* Hamburger placeholder (bar under title) */
+  #menuPlaceholder {
+    width: 100%;
+    background-color: black;
+    padding: 0 10px;    
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 100px;
+  }
+
+  /* Hamburger button */
+  #HamBtn {
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    padding: 8px 12px;
+    z-index: 1101;
+    position: relative;
+  }
+
+  body.menu-open #HamBtn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: black;
+    border-radius: 5px;
+  }
+
+  /* Match scores section */
+  .match-scores {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    max-height: 100%;
+    padding-bottom: 5px;
+  }
+
+  .match-scores::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .match-scores::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 5px;
+  }
+
+  .match {
+    color: white;
+    background-color: #1A1A1A;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    gap: 10px;
+    font-weight: bold;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .match .team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50px;
+  }
+
+  .match .team-name {
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    margin-top: 2px;
+  }
+
+  .match .score {
+    min-width: 25px;
+    text-align: right;
+  }
+
+  /* Hamburger slide menu */
+  .Ham-Menu {
+    position: fixed;
+    top: 0;
+    left: -25%;
+    width: 25%;
+    height: 100%;
+    background-color: black;
+    overflow-y: auto;
+    transition: 0.3s;
+    z-index: 1000;
+    padding-top: 60px;
+  }
+
+  .Ham-Menu a {
+    display: block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+  }
+
+  .Ham-Menu a:hover { background-color: #1A45B8; }
+
+  /* Main content wrapper */
+  #contentWrapper {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  h1 { text-align: center; color: #2A63E8; }
+  p { font-size: 16px; line-height: 1.5; color: #333; }
+  img.square { width: 100%; border-radius: 0; margin-bottom: 10px; }
+
+  /* Footer (igual que main page) */
+  footer {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  footer a {
+    color: blue;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+</style>
+</head>
+
+<body>
+
+<!-- Top Navigation -->
+<div class="topnav">
+  <a class="active" href="https://maaarcoo13.github.io/itss3390project/index.html">
+    <img src="https://1000logos.net/wp-content/uploads/2017/04/nba-big-logo.png" width="90" height="30">
+  </a>
+  <a href="#">News</a>
+  <a href="#">Standings</a>
+  <a href="#">Games</a>
+  <a href="#">Draft</a>
+</div>
+
+<!-- Page title -->
+<div class="page-title">
+  <h1>Santi Aldama's role is about to change</h1>
+</div>
+
+<!-- Hamburger + match scores -->
+<div id="menuPlaceholder">
+  <div id="HamBtn" onclick="toggleHamburger()">&#9776;</div>
+  <div class="match-scores">
+    <!-- Partido 1 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Los_Angeles_Lakers_logo.svg/2560px-Los_Angeles_Lakers_logo.svg.png" width="45" height="28">
+        <div class="team-name">LAL</div>
+      </span>
+      <span class="score">102</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Golden_State_Warriors_logo.svg/993px-Golden_State_Warriors_logo.svg.png" width="35" height="35">
+        <div class="team-name">GSW</div>
+      </span>
+      <span class="score">99</span>
+    </div>
+
+    <!-- Partido 2 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://content.sportslogos.net/logos/6/3786/full/brooklyn_nets_logo_primary_2025_sportslogosnet-1501.png" width="30" height="30">
+        <div class="team-name">BKN</div>
+      </span>
+      <span class="score">110</span>
+      <span class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nba/500/mia.png" width="35" height="35">
+        <div class="team-name">MIA</div>
+      </span>
+      <span class="score">115</span>
+    </div>
+
+    <!-- Partido 3 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1200px-New_York_Knicks_logo.svg.png" width="35" height="30">
+        <div class="team-name">NYK</div>
+      </span>
+      <span class="score">135</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/Charlotte_Hornets_%282014%29.svg/1200px-Charlotte_Hornets_%282014%29.svg.png" width="35" height="30">
+        <div class="team-name">CHA</div>
+      </span>
+      <span class="score">117</span>
+    </div>
+
+    <!-- Partido 4 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Dallas_Mavericks_logo.svg/1153px-Dallas_Mavericks_logo.svg.png" width="35" height="30">
+        <div class="team-name">DAL</div>
+      </span>
+      <span class="score">121</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/2/28/Houston_Rockets.svg" width="40" height="35">
+        <div class="team-name">HOU</div>
+      </span>
+      <span class="score">120</span>
+    </div>
+
+    <!-- Partido 5 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Phoenix_Suns_logo.svg/1186px-Phoenix_Suns_logo.svg.png" width="40" height="35">
+        <div class="team-name">PHO</div>
+      </span>
+      <span class="score">111</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/SacramentoKings.svg/1052px-SacramentoKings.svg.png" width="35" height="35">
+        <div class="team-name">SAC</div>
+      </span>
+      <span class="score">113</span>
+    </div>
+
+    <!-- Partido 6 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ed/Los_Angeles_Clippers_%282024%29.svg/1200px-Los_Angeles_Clippers_%282024%29.svg.png" width="35" height="30">
+        <div class="team-name">LAC</div>
+      </span>
+      <span class="score">123</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/76/Denver_Nuggets.svg/1200px-Denver_Nuggets.svg.png" width="40" height="35">
+        <div class="team-name">DEN</div>
+      </span>
+      <span class="score">121</span>
+    </div>
+
+    <!-- Partido 7 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1200px-New_York_Knicks_logo.svg.png" width="35" height="30">
+        <div class="team-name">NYK</div>
+      </span>
+      <span class="score">105</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Dallas_Mavericks_logo.svg/1153px-Dallas_Mavericks_logo.svg.png" width="40" height="35">
+        <div class="team-name">DAL</div>
+      </span>
+      <span class="score">107</span>
+    </div>
+  </div>
+</div>
+
+<!-- Floating hamburger menu -->
+<div id="HamMenu" class="Ham-Menu">
+   <a href="https://maaarcoo13.github.io/itss3390project/index.html">Home</a>
+    <a href="#">Players</a>
+    <a href="#">Spaniards</a>
+    <a href="#">Europeans</a>
+    <a href="#">Standings</a>
+    <a href="#">Games</a>
+    <a href="#">Draft</a>
+    <a href="#">Teams</a>
+</div>
+
+<!-- Main content -->
+<div id="contentWrapper">
+  <img class="square" src="https://images.daznservices.com/di/library/DAZN_News/5f/6b/santi-aldama_1p7vt6nln9nwt1pit062w0t06l.jpeg?t=-1262764524" alt="Santi Aldama">
+  <p><strong>Santi Aldama</strong> is set to take on a much larger role with the <strong>Memphis Grizzlies</strong> as the 2025–26 NBA season tips off. The <strong>Spanish forward</strong>, known for his versatility and basketball IQ, is expected to log significantly more minutes early in the season due to multiple injuries affecting key members of the Grizzlies’ frontcourt rotation.</p>
+
+<p>With players like <strong>Jaren Jackson Jr.</strong> and <strong>Brandon Clarke</strong> temporarily sidelined, Aldama will be asked to step into a starting or high-minute bench role—something he has proven capable of in previous campaigns. “I’m ready for whatever the team needs,” Aldama said during training camp. “It’s about staying aggressive, being confident, and helping us win games.”</p>
+
+<p>The <strong>Canary Islands native</strong> has been steadily improving since entering the league in 2021, showing flashes of elite shooting touch, positional flexibility, and improved physicality. Last season, Aldama averaged <strong>10.2 points, 5.3 rebounds, and 1.8 assists</strong> per game, establishing himself as one of the Grizzlies’ most reliable bench contributors.</p>
+
+<p>Head Coach <strong>Taylor Jenkins</strong> highlighted Aldama’s development as a major asset heading into the season. “Santi understands our system, he’s unselfish, and he can play both forward spots. His ability to stretch the floor and defend multiple positions gives us great flexibility,” Jenkins noted.</p>
+
+<p>As the Grizzlies aim to stay competitive in the tough Western Conference, Aldama’s increased role could prove vital in maintaining team balance and rhythm while stars recover. His strong preseason performances have already drawn praise from fans and analysts alike, who believe this could be a breakout season for the 24-year-old Spaniard.</p>
+
+<p>With added responsibility and opportunity on the horizon, <strong>Santi Aldama</strong> has the chance to further cement his place as one of Spain’s brightest young talents in the NBA.</p>
+
+
+</div>
+
+<!-- Footer -->
+<footer style="background-color:#e5e5e5; text-align:center; padding:10px; margin-top:7px; color: grey;">
+  <p>Author: Marco Andrea Gil Gonzalez<br>
+  <a href="mailto:dal428695@utdallas.edu">dal428695@utdallas.edu</a></p>
+</footer>
+
+<!-- Hamburger JS -->
+<script>
+function toggleHamburger() {
+  const menu = document.getElementById("HamMenu");
+  const body = document.body;
+  if (menu.style.left === "0px") {
+    menu.style.left = "-25%";
+    body.classList.remove("menu-open");
+  } else {
+    menu.style.left = "0px";
+    body.classList.add("menu-open");
+  }
+}
+</script>
+
+</body>
+</html>
