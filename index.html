@@ -116,6 +116,8 @@
 
   /* Main content wrapper */
   #contentWrapper {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     overflow: hidden; 
     padding: 10px;    
@@ -124,8 +126,7 @@
 
   /* Left section: 75% */
   #mainContent {
-    float: left;
-    width: 75%;
+    width: 100%;
     padding-left: 0px;
     padding-right: 10px;
   }
@@ -133,13 +134,12 @@
   /* Right section: 25% */
  /* --- Standings Container --- */
 #rightContent {
-  float: left;
-  width: 25%;
   background-color: black;
   color: white;
   padding: 10px;
-  height: 600px; /* altura fija */
-  overflow-y: auto; /* scroll vertical si el contenido excede */
+  height: 600px;
+  overflow-y: auto;
+  width: 100%;
 }
 
 #rightContent h2 {
@@ -147,7 +147,6 @@
   color: #2A63E8;
   margin-bottom: 10px;
   font-weight: bold;
-
 }
 
 /* --- Each Conference Section --- */
@@ -192,7 +191,6 @@
   margin-right: 5px;
 }
 
-
   /* Hamburger slide menu */
   .Ham-Menu {
     position: fixed;
@@ -223,16 +221,16 @@
     margin-top: 7px;
   }
   
- 
 .news-section {
   display: flex;
   gap: 10px;            
   margin-top: 7px;      
   padding: 10px;
+  flex-wrap: wrap;
 }
 
 .news-card {
-  flex: 1;                      
+  flex: 1 1 100%;                      
   background-color: #f2f2f2;
   padding: 10px;
   border-radius: 5px;
@@ -248,7 +246,6 @@
   font-size: 16px;
   color: #000;
   font-weight: bold;
-  
 }
 
 .news-card p {
@@ -256,40 +253,30 @@
   color: #333;
 }
 
-  /* Responsive Columns */
   [class*="col-"] { width: 100%; }
 
-  /* Tablets */
   @media only screen and (min-width: 600px) {
     #contentWrapper {
       flex-direction: row;
     }
     #mainContent {
-      flex: 70%;
+      width: 70%;
     }
     #rightContent {
-      flex: 30%;
+      width: 30%;
     }
 
-    .news-section {
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
     .news-card {
       flex: 1 1 calc(50% - 10px);
     }
   }
 
-  /* Desktop */
   @media only screen and (min-width: 768px) {
-    #contentWrapper {
-      flex-direction: row;
-    }
     #mainContent {
-      flex: 75%;
+      width: 75%;
     }
     #rightContent {
-      flex: 25%;
+      width: 25%;
     }
 
     .news-card {
@@ -299,9 +286,7 @@
 
 </style>
 </head>
-
 <body>
-
   <!-- Top Navigation -->
   <div class="topnav">
     <a class="active" href="#">
@@ -313,110 +298,107 @@
     <a href="#">Draft</a>
   </div>
 
-  <!-- Page title -->
   <div style="background-color: #2A63E8 ; padding:15px 0; text-align:center; color:white;">
     <h1>Spaniards' & Europeans' NBA Blog</h1>
   </div>
 
-  <!-- Hamburger + match scores -->
   <div id="menuPlaceholder">
     <div id="HamBtn" onclick="toggleHamburger()">&#9776;</div>
     <div class="match-scores">
-      <!-- Match 1 -->
       <div class="match">
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Los_Angeles_Lakers_logo.svg/2560px-Los_Angeles_Lakers_logo.svg.png" width="45" height="28">
-          <div class="team-name">LAL</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Los_Angeles_Lakers_logo.svg/2560px-Los_Angeles_Lakers_logo.svg.png" width="45" height="28"><div class="team-name">LAL</div></span>
         <span class="score">102</span>
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Golden_State_Warriors_logo.svg/993px-Golden_State_Warriors_logo.svg.png" width="35" height="35">
-          <div class="team-name">GSW</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Golden_State_Warriors_logo.svg/993px-Golden_State_Warriors_logo.svg.png" width="35" height="35"><div class="team-name">GSW</div></span>
         <span class="score">99</span>
       </div>
 
-      <!-- Match 2 -->
       <div class="match">
-        <span class="team">
-          <img src="https://content.sportslogos.net/logos/6/3786/full/brooklyn_nets_logo_primary_2025_sportslogosnet-1501.png" width="30" height="30">
-          <div class="team-name">BKN</div>
-        </span>
+        <span class="team"><img src="https://content.sportslogos.net/logos/6/3786/full/brooklyn_nets_logo_primary_2025_sportslogosnet-1501.png" width="30" height="30"><div class="team-name">BKN</div></span>
         <span class="score">110</span>
-        <span class="team">
-          <img src="https://a.espncdn.com/i/teamlogos/nba/500/mia.png" width="35" height="35">
-          <div class="team-name">MIA</div>
-        </span>
+        <span class="team"><img src="https://a.espncdn.com/i/teamlogos/nba/500/mia.png" width="35" height="35"><div class="team-name">MIA</div></span>
         <span class="score">115</span>
       </div>
 
-      <!-- Partido 3 -->
       <div class="match">
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1200px-New_York_Knicks_logo.svg.png" width="35" height="30">
-          <div class="team-name">NYK</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1200px-New_York_Knicks_logo.svg.png" width="35" height="30"><div class="team-name">NYK</div></span>
         <span class="score">135</span>
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/Charlotte_Hornets_%282014%29.svg/1200px-Charlotte_Hornets_%282014%29.svg.png" width="35" height="30">
-          <div class="team-name">CHA</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/Charlotte_Hornets_%282014%29.svg/1200px-Charlotte_Hornets_%282014%29.svg.png" width="35" height="30"><div class="team-name">CHA</div></span>
         <span class="score">117</span>
       </div>
 
-      <!-- Partido 4 -->
       <div class="match">
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Dallas_Mavericks_logo.svg/1153px-Dallas_Mavericks_logo.svg.png" width="35" height="30">
-          <div class="team-name">DAL</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Dallas_Mavericks_logo.svg/1153px-Dallas_Mavericks_logo.svg.png" width="35" height="30"><div class="team-name">DAL</div></span>
         <span class="score">121</span>
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/2/28/Houston_Rockets.svg" width="40" height="35">
-          <div class="team-name">HOU</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/2/28/Houston_Rockets.svg" width="40" height="35"><div class="team-name">HOU</div></span>
         <span class="score">120</span>
       </div>
+
       <div class="match">
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Phoenix_Suns_logo.svg/1186px-Phoenix_Suns_logo.svg.png" width="40" height="35">
-          <div class="team-name">PHO</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Phoenix_Suns_logo.svg/1186px-Phoenix_Suns_logo.svg.png" width="40" height="35"><div class="team-name">PHO</div></span>
         <span class="score">111</span>
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/SacramentoKings.svg/1052px-SacramentoKings.svg.png" width="35" height="35">
-          <div class="team-name">SAC</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/SacramentoKings.svg/1052px-SacramentoKings.svg.png" width="35" height="35"><div class="team-name">SAC</div></span>
         <span class="score">113</span>
       </div>
+
       <div class="match">
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ed/Los_Angeles_Clippers_%282024%29.svg/1200px-Los_Angeles_Clippers_%282024%29.svg.png" width="35" height="30">
-          <div class="team-name">LAC</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ed/Los_Angeles_Clippers_%282024%29.svg/1200px-Los_Angeles_Clippers_%282024%29.svg.png" width="35" height="30"><div class="team-name">LAC</div></span>
         <span class="score">123</span>
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/76/Denver_Nuggets.svg/1200px-Denver_Nuggets.svg.png" width="40" height="35">
-          <div class="team-name">DEN</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/76/Denver_Nuggets.svg/1200px-Denver_Nuggets.svg.png" width="40" height="35"><div class="team-name">DEN</div></span>
         <span class="score">121</span>
       </div>
+
       <div class="match">
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1200px-New_York_Knicks_logo.svg.png" width="35" height="30">
-          <div class="team-name">NYK</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1200px-New_York_Knicks_logo.svg.png" width="35" height="30"><div class="team-name">NYK</div></span>
         <span class="score">105</span>
-        <span class="team">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Dallas_Mavericks_logo.svg/1153px-Dallas_Mavericks_logo.svg.png" width="40" height="35">
-          <div class="team-name">DAL</div>
-        </span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Dallas_Mavericks_logo.svg/1153px-Dallas_Mavericks_logo.svg.png" width="40" height="35"><div class="team-name">DAL</div></span>
         <span class="score">107</span>
       </div>
+
+      <div class="match">
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/Atlanta_Hawks_logo.svg/1200px-Atlanta_Hawks_logo.svg.png" width="35" height="30"><div class="team-name">ATL</div></span>
+        <span class="score">99</span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/67/Orlando_Magic_logo.svg/1200px-Orlando_Magic_logo.svg.png" width="35" height="30"><div class="team-name">ORL</div></span>
+        <span class="score">101</span>
+      </div>
+
+      <div class="match">
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Boston_Celtics.svg/1200px-Boston_Celtics.svg.png" width="35" height="30"><div class="team-name">BOS</div></span>
+        <span class="score">120</span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Milwaukee_Bucks_logo.svg/1200px-Milwaukee_Bucks_logo.svg.png" width="35" height="30"><div class="team-name">MIL</div></span>
+        <span class="score">118</span>
+      </div>
+
+      <div class="match">
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/19/Chicago_Bulls_logo.svg/1200px-Chicago_Bulls_logo.svg.png" width="35" height="30"><div class="team-name">CHI</div></span>
+        <span class="score">88</span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Indiana_Pacers_logo.svg/1200px-Indiana_Pacers_logo.svg.png" width="35" height="30"><div class="team-name">IND</div></span>
+        <span class="score">95</span>
+      </div>
+
+      <div class="match">
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/24/Toronto_Raptors_logo.svg/1200px-Toronto_Raptors_logo.svg.png" width="35" height="30"><div class="team-name">TOR</div></span>
+        <span class="score">112</span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/Miami_Heat_logo.svg/1200px-Miami_Heat_logo.svg.png" width="35" height="30"><div class="team-name">MIA</div></span>
+        <span class="score">110</span>
+      </div>
+
+      <div class="match">
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Portland_Trail_Blazers_logo.svg/1200px-Portland_Trail_Blazers_logo.svg.png" width="35" height="30"><div class="team-name">POR</div></span>
+        <span class="score">101</span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/San_Antonio_Spurs_logo.svg/1200px-San_Antonio_Spurs_logo.svg.png" width="35" height="30"><div class="team-name">SAS</div></span>
+        <span class="score">99</span>
+      </div>
+
+      <div class="match">
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Utah_Jazz_logo.svg/1200px-Utah_Jazz_logo.svg.png" width="35" height="30"><div class="team-name">UTA</div></span>
+        <span class="score">118</span>
+        <span class="team"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/32/Oklahoma_City_Thunder_logo.svg/1200px-Oklahoma_City_Thunder_logo.svg.png" width="35" height="30"><div class="team-name">OKC</div></span>
+        <span class="score">115</span>
+      </div>
+
     </div>
   </div>
 
-  <!-- Floating hamburger menu -->
   <div id="HamMenu" class="Ham-Menu">
     <a href="file:///Users/macbook/Downloads/WebPageProject/Assingment6-ProjectPhase2.html">Home</a>
     <a href="#">Players</a>
@@ -428,107 +410,96 @@
     <a href="#">Teams</a>
   </div>
 
-  <!-- Main content -->
   <div id="contentWrapper">
     <div id="mainContent">
-      <!-- Dentro de tu main content -->
        <img src="https://spain.id.nba.com/storage/images/photos/1590403706.jpeg" width="100%" alt="NBA Spain Image">
        <h2 style="color: black; font-weight: bold;">
        <a href="https://maaarcoo13.github.io/itss3390project/news-gasolbrothers.html" target="_blank" style="color:black; text-decoration:none;">Pau and Marc Gasol became the first brothers to get their jerseys retired</a>
        </h2>
-
     </div>
     <div id="rightContent">
-  <h2>NBA Standings</h2>
-  <div id="standings-wrapper">
-    
-    <!-- Eastern Conference -->
-    <div class="standings-section">
-      <h3>Eastern Conference</h3>
-      <table class="standings-table">
-        <thead>
-          <tr>
-            <th>Team</th>
-            <th>W</th>
-            <th>L</th>
-            <th>Win%</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/8/8f/Boston_Celtics.svg" class="team-logo"> BOS</td>
-            <td>58</td><td>24</td><td>.707</td>
-          </tr>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/4/4a/Milwaukee_Bucks_logo.svg" class="team-logo"> MIL</td>
-            <td>53</td><td>29</td><td>.646</td>
-          </tr>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/2/25/New_York_Knicks_logo.svg" class="team-logo"> NYK</td>
-            <td>50</td><td>32</td><td>.610</td>
-          </tr>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/1/1b/Cleveland_Cavaliers_logo.svg" class="team-logo"> CLE</td>
-            <td>48</td><td>34</td><td>.585</td>
-          </tr>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/c/c7/Miami_Heat_logo.svg" class="team-logo"> MIA</td>
-            <td>45</td><td>37</td><td>.549</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <h2>NBA Standings</h2>
+      <div id="standings-wrapper">
+        <div class="standings-section">
+          <h3>Eastern Conference</h3>
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>W</th>
+                <th>L</th>
+                <th>Win%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/8/8f/Boston_Celtics.svg" class="team-logo"> BOS</td>
+                <td>58</td><td>24</td><td>.707</td>
+              </tr>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/4/4a/Milwaukee_Bucks_logo.svg" class="team-logo"> MIL</td>
+                <td>53</td><td>29</td><td>.646</td>
+              </tr>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/2/25/New_York_Knicks_logo.svg" class="team-logo"> NYK</td>
+                <td>50</td><td>32</td><td>.610</td>
+              </tr>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/1/1b/Cleveland_Cavaliers_logo.svg" class="team-logo"> CLE</td>
+                <td>48</td><td>34</td><td>.585</td>
+              </tr>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/c/c7/Miami_Heat_logo.svg" class="team-logo"> MIA</td>
+                <td>45</td><td>37</td><td>.549</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-    <!-- Western Conference -->
-    <div class="standings-section">
-      <h3>Western Conference</h3>
-      <table class="standings-table">
-        <thead>
-          <tr>
-            <th>Team</th>
-            <th>W</th>
-            <th>L</th>
-            <th>Win%</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> DAL</td>
-            <td>57</td><td>25</td><td>.695</td>
-          </tr>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> DEN</td>
-            <td>54</td><td>28</td><td>.659</td>
-          </tr>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> MIN</td>
-            <td>51</td><td>31</td><td>.622</td>
-          </tr>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/2/28/Houston_Rockets.svg" class="team-logo"> HOU</td>
-            <td>48</td><td>34</td><td>.585</td>
-          </tr>
-          <tr>
-            <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> PHO</td>
-            <td>46</td><td>36</td><td>.561</td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="standings-section">
+          <h3>Western Conference</h3>
+          <table class="standings-table">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>W</th>
+                <th>L</th>
+                <th>Win%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> DAL</td>
+                <td>57</td><td>25</td><td>.695</td>
+              </tr>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/7/75/Denver_Nuggets_logo.svg" class="team-logo"> DEN</td>
+                <td>54</td><td>28</td><td>.659</td>
+              </tr>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/1/14/Minnesota_Timberwolves_logo.svg" class="team-logo"> MIN</td>
+                <td>51</td><td>31</td><td>.622</td>
+              </tr>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/2/28/Houston_Rockets.svg" class="team-logo"> HOU</td>
+                <td>48</td><td>34</td><td>.585</td>
+              </tr>
+              <tr>
+                <td><img src="https://upload.wikimedia.org/wikipedia/en/9/97/Dallas_Mavericks_logo.svg" class="team-logo"> PHO</td>
+                <td>46</td><td>36</td><td>.561</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-  </div>
-
-  <!-- Yellow block -->
-  <!-- Noticias tipo tarjetas -->
 <div class="news-section">
   <div class="news-card">
     <img src="https://e01-xlk-ue-marca.uecdn.es/uploads/2025/09/29/68dafb4968e8d.jpeg" alt="Noticia 1">
     <h3 style="color: black; font-weight: bold;">
-    <a href="news-hugogonzalez.html" target="_blank" style="color:black; text-decoration:none;">Hugo Gonzalez's first Media Day
-
-    </a>
+    <a href="news-hugogonzalez.html" target="_blank" style="color:black; text-decoration:none;">Hugo Gonzalez's first Media Day</a>
     </h3>
     <p>Former Real Madrid player had his first Media Day on the NBA...</p>
   </div>
@@ -544,8 +515,6 @@
   </div>
 </div>
 
-
-  <!-- Footer -->
   <footer>
     <div style="background-color:#e5e5e5; text-align:center; padding:10px; margin-top:7px; color:black;">
       <p>Author: Marco Andrea Gil Gonzalez<br>
@@ -553,7 +522,6 @@
     </div>
   </footer>
 
-  <!-- Hamburger JS -->
   <script>
     function toggleHamburger() {
       const menu = document.getElementById("HamMenu");
@@ -567,6 +535,5 @@
       }
     }
   </script>
-
 </body>
 </html>
