@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<style>
+* { box-sizing: border-box; }
+body {
+  font-family: Verdana;
+  color: #aaaaaa;
+  background-color: black;
+  margin: 0;
+}
+.topnav {
+  overflow: hidden;
+  background-color: black;
+}
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.topnav a:hover { background-color: #ddd; color: black; }
+.topnav a.active { background-color: white; color: white; }
+#menuPlaceholder {
+  width: 100%;
+  background-color: black;
+  padding: 0 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 100px;
+}
+#HamBtn {
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  padding: 8px 12px;
+  z-index: 1101;
+  position: relative;
+}
+body.menu-open #HamBtn {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: black;
+  border-radius: 5px;
+}
+.match-scores {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  max-height: 100%;
+  padding-bottom: 5px;
+}
+.match-scores::-webkit-scrollbar { height: 5px; }
+.match-scores::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 5px;
+}
+.match {
+  color: white;
+  background-color: #1A1A1A;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  gap: 10px;
+  font-weight: bold;
+  align-items: center;
+  flex-shrink: 0;
+}
+.match .team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 50px;
+}
+.match .team-name {
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  margin-top: 2px;
+}
+.match .score {
+  min-width: 25px;
+  text-align: right;
+}
+.Ham-Menu {
+  position: fixed;
+  top: 0;
+  left: -25%;
+  width: 25%;
+  height: 100%;
+  background-color: black;
+  overflow-y: auto;
+  transition: 0.3s;
+  z-index: 1000;
+  padding-top: 60px;
+}
+.Ham-Menu a {
+  display: block;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+}
+/* Standings Container */
+  #contentWrapper {
+    background-color: black;
+    color: white;
+    padding: 20px;
+  }
+
+  #contentWrapper h2 {
+    text-align: center;
+    color: #2A63E8;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .standings-section {
+    margin-bottom: 40px;
+  }
+
+  .standings-section h3 {
+    background-color: #2A63E8;
+    color: white;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    text-align: center;
+  }
+
+  .standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    color: white;
+  }
+
+  .standings-table th {
+    background-color: #1A1A1A;
+    color: #2A63E8;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .standings-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .team-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+#prospects-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.player-card {
+  background-color: #1A1A1A;
+  color: white;
+  width: 220px;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+
+.player-card:hover {
+  transform: scale(1.05);
+}
+
+.player-card img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.search-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.search-filter-container input[type="text"] {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: black;
+}
+
+.search-filter-container select {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+
+.Ham-Menu a:hover { background-color: #1A45B8; }
+@media only screen and (max-width: 768px) {
+  .player-card { width: 45%; }
+}
+@media only screen and (max-width: 600px) {
+  .player-card { width: 90%; }
+}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <a class="active" href="https://maaarcoo13.github.io/itss3390project/index.html"><img src="https://1000logos.net/wp-content/uploads/2017/04/nba-big-logo.png" width="90" height="30"></a>
+  <a href="#">News</a>
+  <a href="https://maaarcoo13.github.io/itss3390project/players.html">Players</a>
+  <a href="https://maaarcoo13.github.io/itss3390project/standings.html">Standings</a>
+  <a href="https://maaarcoo13.github.io/itss3390project/draft.html">Draft</a>
+</div>
+
+<div style="background-color: #2A63E8; padding:15px 0; text-align:center; color:white;">
+  <h1>NBA Draft 2026 — Top Prospects</h1>
+</div>
+
+<div id="menuPlaceholder">
+  <div id="HamBtn" onclick="toggleHamburger()">&#9776;</div>
+  <div class="match-scores">
+    <!-- Partido 1 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Los_Angeles_Lakers_logo.svg/2560px-Los_Angeles_Lakers_logo.svg.png" width="45" height="28">
+        <div class="team-name">LAL</div>
+      </span>
+      <span class="score">102</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/01/Golden_State_Warriors_logo.svg/993px-Golden_State_Warriors_logo.svg.png" width="35" height="35">
+        <div class="team-name">GSW</div>
+      </span>
+      <span class="score">99</span>
+    </div>
+
+    <!-- Partido 2 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://content.sportslogos.net/logos/6/3786/full/brooklyn_nets_logo_primary_2025_sportslogosnet-1501.png" width="30" height="30">
+        <div class="team-name">BKN</div>
+      </span>
+      <span class="score">110</span>
+      <span class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nba/500/mia.png" width="35" height="35">
+        <div class="team-name">MIA</div>
+      </span>
+      <span class="score">115</span>
+    </div>
+
+    <!-- Partido 3 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1200px-New_York_Knicks_logo.svg.png" width="35" height="30">
+        <div class="team-name">NYK</div>
+      </span>
+      <span class="score">135</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/Charlotte_Hornets_%282014%29.svg/1200px-Charlotte_Hornets_%282014%29.svg.png" width="35" height="30">
+        <div class="team-name">CHA</div>
+      </span>
+      <span class="score">117</span>
+    </div>
+
+    <!-- Partido 4 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Dallas_Mavericks_logo.svg/1153px-Dallas_Mavericks_logo.svg.png" width="35" height="30">
+        <div class="team-name">DAL</div>
+      </span>
+      <span class="score">121</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/2/28/Houston_Rockets.svg" width="40" height="35">
+        <div class="team-name">HOU</div>
+      </span>
+      <span class="score">120</span>
+    </div>
+
+    <!-- Partido 5 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Phoenix_Suns_logo.svg/1186px-Phoenix_Suns_logo.svg.png" width="40" height="35">
+        <div class="team-name">PHO</div>
+      </span>
+      <span class="score">111</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/SacramentoKings.svg/1052px-SacramentoKings.svg.png" width="35" height="35">
+        <div class="team-name">SAC</div>
+      </span>
+      <span class="score">113</span>
+    </div>
+
+    <!-- Partido 6 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ed/Los_Angeles_Clippers_%282024%29.svg/1200px-Los_Angeles_Clippers_%282024%29.svg.png" width="35" height="30">
+        <div class="team-name">LAC</div>
+      </span>
+      <span class="score">123</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/76/Denver_Nuggets.svg/1200px-Denver_Nuggets.svg.png" width="40" height="35">
+        <div class="team-name">DEN</div>
+      </span>
+      <span class="score">121</span>
+    </div>
+
+    <!-- Partido 7 -->
+    <div class="match">
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/25/New_York_Knicks_logo.svg/1200px-New_York_Knicks_logo.svg.png" width="35" height="30">
+        <div class="team-name">NYK</div>
+      </span>
+      <span class="score">105</span>
+      <span class="team">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Dallas_Mavericks_logo.svg/1153px-Dallas_Mavericks_logo.svg.png" width="40" height="35">
+        <div class="team-name">DAL</div>
+      </span>
+      <span class="score">107</span>
+    </div>
+  </div>
+
+
+</div>
+
+<div id="HamMenu" class="Ham-Menu">
+  <a href="https://maaarcoo13.github.io/itss3390project/index.html">Home</a>
+  <a href="https://maaarcoo13.github.io/itss3390project/players.html">Players</a>
+  <a href="https://maaarcoo13.github.io/itss3390project/standings.html">Standings</a>
+  <a href="https://maaarcoo13.github.io/itss3390project/draft.html">Draft</a>
+  <a href="#">Teams</a>
+</div>
+
+
+<!-- Draft Content -->
+  <div id="contentWrapper">
+  <h2>Early look at next year’s most promising young talents</h2>
+  <br>
+  <div class="search-filter-container">
+    <input type="text" id="searchInput" placeholder="Search by player name..." onkeyup="filterPlayers()">
+
+    <label for="countryFilter">Country:</label>
+    <select id="countryFilter" onchange="filterPlayers()">
+      <option value="All">All</option>
+      <option value="Serbia">Serbia</option>
+<option value="Spain">Spain</option>
+<option value="France">France</option>
+<option value="Lithuania">Lithuania</option>
+<option value="Slovenia">Slovenia</option>
+<option value="Greece">Greece</option>
+<option value="Croatia">Croatia</option>
+<option value="Italy">Italy</option>
+<option value="Germany">Germany</option>
+<option value="Turkey">Turkey</option>
+<option value="Latvia">Latvia</option>
+<option value="Finland">Finland</option>
+<option value="Poland">Poland</option>
+<option value="Czech Republic">Czech Republic</option>
+<option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+<option value="Montenegro">Montenegro</option>
+<option value="Georgia">Georgia</option>
+<option value="Hungary">Hungary</option>
+<option value="Ukraine">Ukraine</option>
+<option value="Estonia">Estonia</option>
+<option value="Belgium">Belgium</option>
+<option value="Netherlands">Netherlands</option>
+<option value="Sweden">Sweden</option>
+<option value="Iceland">Iceland</option>
+<option value="Israel">Israel</option>
+<option value="Portugal">Portugal</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="Switzerland">Switzerland</option>
+<option value="North Macedonia">North Macedonia</option>
+<option value="Bulgaria">Bulgaria</option>
+    </select>
+
+    <label for="positionFilter">Position:</label>
+    <select id="positionFilter" onchange="filterPlayers()">
+      <option value="All">All</option>
+      <option value="PG">PG</option>
+      <option value="SG">SG</option>
+      <option value="SF">SF</option>
+      <option value="PF">PF</option>
+      <option value="C">C</option>
+    </select>
+  </div>
+
+  <div id="prospects-wrapper">
+    <div class="player-card" data-name="Hannes Steinbach" data-country="Germany" data-position="C" data-age="19">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/hannes-steinbach-1f059005-e2cf-60ac-b50d-81b2349a5f2e.png" alt="Hannes Steinbach">
+      <h3>Hannes Steinbach #11 C</h3>
+      <p>Age: 19</p>
+      <p>Height: 6'11"</p>
+      <p>Country: Germany</p>
+      <p>Team: Huskies</p>
+      <p>PPG: 17 | RPG: 11.5 | APG: 5</p>
+    </div>
+
+    <div class="player-card" data-name="Shon Abaev" data-country="Israel" data-position="SG" data-age="20">
+      <img src="https://images.overtime.tv/ote-games/e3008e5d-0f63-423a-abbc-49f9bbacc2e0/1f5d32fe-c376-41d7-a9df-c9fdcf35f299.webp" alt="Shon Abaev">
+      <h3>Shon Abaev #27 SG</h3>
+      <p>Age: 19</p>
+      <p>Height: 6'8"</p>
+      <p>Country: Israel</p>
+      <p>Team: Cincinnati</p>
+      <p>PPG: 11.2 | RPG: 2.0 | APG: 2.5</p>
+    </div>
+
+    <div class="player-card" data-name="Dame Sarr" data-country="Italia" data-position="SF" data-age="19">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/d-sarre-2-1ef83e7c-b9c3-6876-9a7a-0158c49e6797.png" alt="Dame Sarr">
+      <h3>Dame Sarr #14 SF</h3>
+      <p>Age: 21</p>
+      <p>Height: 6'8"</p>
+      <p>Country: Italia</p>
+      <p>Team: Duke</p>
+      <p>PPG: 5.0 | RPG: 4.5 | APG: 0.5</p>
+    </div>
+
+    <div class="player-card" data-name="Aday Mara" data-country="Spain" data-position="C" data-age="20">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/aday-mara-copie-1ef45b86-8509-62f2-8b4d-1114d1014a6e.png" alt="Aday Mara">
+      <h3>Aday Mara #24 C</h3>
+      <p>Age: 20</p>
+      <p>Height: 7'3"</p>
+      <p>Country: Germany</p>
+      <p>Team: Michigan</p>
+      <p>PPG: 12.0 | RPG: 12.0 | APG: 2.0</p>
+    </div>
+
+    <div class="player-card" data-name="Sergio De Larrea" data-country="Spain" data-position="PG" data-age="19">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/sergio-de-larrea-1f0ad228-305e-69da-85c1-538fd346fdd2.png" alt="Sergio De Larrea">
+      <h3>Sergio De Larrea #32 PG</h3>
+      <p>Age: 19</p>
+      <p>Height: 6'5"</p>
+      <p>Country: Spain</p>
+      <p>Team: Valencia</p>
+      <p>PPG: 6.8 | RPG: 2.2 | APG: 3.0</p>
+    </div>
+    
+    <div class="player-card" data-name="Adam Atamna" data-country="France" data-position="PG" data-age="17">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/adam-atamna-1f0ad050-29cf-654e-b8a0-8d5150973c5c.png" alt="Adam Atamna">
+      <h3>Adam Atamna #33 PG</h3>
+      <p>Age: 17</p>
+      <p>Height: 6'4"</p>
+      <p>Country: France</p>
+      <p>Team: Asvel</p>
+      <p>PPG: 10.4 | RPG: 1.9 | APG: 2.0</p>
+    </div>
+
+    <div class="player-card" data-name="Henri Veesaar" data-country="Estonia" data-position="C" data-age="21">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/henri-veesaar-1efa771a-7032-6e18-b465-5109aaa2fe4a.png" alt="Henri Veesaar">
+      <h3>Henri Veesaar #35 C</h3>
+      <p>Age: 21</p>
+      <p>Height: 7'0"</p>
+      <p>Country: Estonia</p>
+      <p>Team: North Carolina</p>
+      <p>PPG: 17 | RPG: 7 | APG: 2.5</p>
+    </div>
+
+    <div class="player-card" data-name="Milos Uzan" data-country="Serbia" data-position="SG" data-age="22">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/milos-uza-1f0099ec-907a-60e0-9ccf-6b5a27e37557.png" alt="Milos Uzan">
+      <h3>Milos Uzan #38 SG</h3>
+      <p>Age: 22</p>
+      <p>Height: 6'4"</p>
+      <p>Country: Serbia</p>
+      <p>Team: Houston</p>
+      <p>PPG: 11.5 | RPG: 4.0 | APG: 5.5</p>
+    </div>
+
+
+    <div class="player-card" data-name="Amael L'Etang" data-country="France" data-position="C" data-age="21">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/amael-l-eta-1f060ed3-5b7a-6e10-b99e-ed74d72326f9.png" alt="Amael L'Etang">
+      <h3>Amael L'Etang #47 C</h3>
+      <p>Age: 21</p>
+      <p>Height: 7'1"</p>
+      <p>Country: France</p>
+      <p>Team: Dayton</p>
+      <p>PPG: 14.0 | RPG: 6.0 | APG: 1.0</p>
+    </div>
+    
+    <div class="player-card" data-name="Tomislav Ivisic" data-country="Croatia" data-position="C" data-age="22">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/tomislav-ivisic-1-1ee863ac-bd1b-633a-9a58-0506bb87f7de.png" alt="Tomislav Ivisic">
+      <h3>Tomislav Ivisic #56 PG</h3>
+      <p>Age: 22</p>
+      <p>Height: 7'1"</p>
+      <p>Country: Croatia</p>
+      <p>Team: Illinois</p>
+      <p>PPG: 13.0 | RPG: 7.7 | APG: 2.3</p>
+    </div>
+
+    <div class="player-card" data-name="neoklis avdalas" data-country="France" data-position="SG" data-age="17">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/neoklis-avdalas-1f060e99-01a6-6568-9c51-c191354e5d48.png" alt="neoklis avdalas">
+      <h3>Neoklis Avdalas #NA SG</h3>
+      <p>Age: 19</p>
+      <p>Height: 6'5"</p>
+      <p>Country: Greece</p>
+      <p>Team: Hokies</p>
+      <p>PPG: 20.5 | RPG: 4.0 | APG: 7.5</p>
+    </div>
+    
+    <div class="player-card" data-name="Baba Miller" data-country="Spain" data-position="PF" data-age="21">
+      <img src="https://www.cbssports.com/_next/image?url=https%3A%2F%2Fsportshub.cbsistatic.com%2Fi%2Fsports%2Fplayer%2Fheadshot%2F28954664.png%3Fwidth%3D200&w=3840&q=75" alt="Baba Miller">
+      <h3>Baba Miller #NA PG</h3>
+      <p>Age: 21</p>
+      <p>Height: 6'11"</p>
+      <p>Country: Spain</p>
+      <p>Team: Cincinnati</p>
+      <p>PPG: 21.0 | RPG: 10.5 | APG: 1.0</p>
+    </div>
+    
+    <div class="player-card" data-name="Mario Saint-Supery" data-country="Spain" data-position="PG" data-age="19">
+      <img src="https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/mario-saint-supery-grande-1f085cc3-bfc4-614c-880d-b1c9d9862429.png" alt="Mario Saint-Supery">
+      <h3>Mario Saint-Supery #NA PG</h3>
+      <p>Age: 19</p>
+      <p>Height: 6'4"</p>
+      <p>Country: Spain</p>
+      <p>Team: Gonzaga</p>
+      <p>PPG: 8.0 | RPG: 3.0 | APG: 4.5</p>
+    </div>
+  </div>
+</div>
+
+
+
+<footer>
+  <div style="background-color:#e5e5e5; text-align:center; padding:10px; margin-top:7px; color:black;">
+    <p>Author: Marco Andrea Gil Gonzalez<br><a style="color:blue;" href="mailto:dal428695@utdallas.edu">dal428695@utdallas.edu</a></p>
+  </div>
+</footer>
+
+<script>
+function toggleHamburger() {
+  const menu = document.getElementById("HamMenu");
+  const body = document.body;
+  if (menu.style.left === "0px") {
+    menu.style.left = "-25%";
+    body.classList.remove("menu-open");
+  } else {
+    menu.style.left = "0px";
+    body.classList.add("menu-open");
+  }
+}
+
+function filterPlayers() {
+  const searchValue = document.getElementById('searchInput').value.toLowerCase();
+  const countryValue = document.getElementById('countryFilter').value;
+  const positionValue = document.getElementById('positionFilter').value;
+
+  const cards = document.querySelectorAll('.player-card');
+
+  cards.forEach(card => {
+    const name = card.getAttribute('data-name').toLowerCase();
+    const country = card.getAttribute('data-country');
+    const position = card.getAttribute('data-position');
+
+    const matchesSearch = name.includes(searchValue);
+    const matchesCountry = countryValue === "All" || country === countryValue;
+    const matchesPosition = positionValue === "All" || position === positionValue;
+
+    if(matchesSearch && matchesCountry && matchesPosition) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+
+</script>
+</body>
+</html>
