@@ -310,8 +310,29 @@ body.menu-open #HamBtn {
 
 <div class="search-container">
   <input type="text" id="playerSearch" placeholder="Search player by name...">
+  <select id="countryFilter" onchange="filterByCountry()">
+    <option value="">All Countries</option>
+    <option value="Spain">Spain</option>
+    <option value="Greece">Greece</option>
+    <option value="United Kingdom">United Kingdom</option>
+    <option value="Israel">Israel</option>
+    <option value="France">France</option>
+    <option value="Serbia">Serbia</option>
+    <option value="Switzerland">Switzerland</option>
+    <option value="Germany">Germany</option>
+    <option value="Slovenia">Slovenia</option>
+    <option value="Finland">Finland</option>
+    <option value="Lithuania">Lithuania</option>
+    <option value="Austria">Austria</option>
+    <option value="Latvia">Latvia</option>
+    <option value="Turkey">Turkey</option>
+    <option value="Poland">Poland</option>
+    <option value="Portugal">Portugal</option>
+    <option value="Montenegro">Montenegro</option>
+  </select>
   <button onclick="searchPlayer()">Search</button>
 </div>
+
 
 <div class="players-grid" id="playersGrid">
   <div class="player-card" data-name="Santi Aldama">
@@ -571,6 +592,27 @@ function searchPlayer() {
     card.style.display = name.includes(input) ? "block" : "none";
   });
 }
+
+function searchPlayer() {
+  const input = document.getElementById("playerSearch").value.toLowerCase();
+  const selectedCountry = document.getElementById("countryFilter").value;
+  const cards = document.querySelectorAll(".player-card");
+
+  cards.forEach(card => {
+    const name = card.getAttribute("data-name").toLowerCase();
+    const country = card.querySelector(".country").innerText;
+
+    const matchName = name.includes(input);
+    const matchCountry = selectedCountry === "" || country === selectedCountry;
+
+    card.style.display = (matchName && matchCountry) ? "block" : "none";
+  });
+}
+
+function filterByCountry() {
+  searchPlayer(); // Reutilizamos la función para combinar ambos filtros
+}
+
 </script>
 </body>
 </html>
